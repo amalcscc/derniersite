@@ -1236,6 +1236,10 @@ header {
     width: auto;
 }
 
+.step-actions .btn-back {
+    margin-right: auto;
+}
+
 /* Modal */
 .modal {
     display: none;
@@ -1318,6 +1322,77 @@ header {
 .appointment-item.cancelled {
     background-color: #fde2e2;
     color: #e74c3c;
+}
+
+/* Today's Appointments List */
+.today-appointments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.appointment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-left: 4px solid #4f8cff;
+    transition: all 0.3s ease;
+}
+
+.appointment-item.cancelled {
+    background-color: #fde2e2;
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.appointment-item > div:first-child {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.appointment-item strong {
+    color: #2c3e50;
+}
+
+.appointment-item.cancelled strong {
+    color: #c0392b;
+}
+
+.appointment-item .action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.appointment-item .action-buttons button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.appointment-item .action-buttons button:hover {
+    opacity: 0.9;
+}
+
+/* Specific styles for action buttons if needed */
+.appointment-item .action-buttons .validate-btn {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.appointment-item .action-buttons .cancel-btn {
+    background-color: #e74c3c;
+    color: white;
 }
 
 /* Responsive Design */
