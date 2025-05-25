@@ -14,15 +14,19 @@ const timeSlots = document.getElementById('time-slots');
 // Check authentication status on page load
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('/api/me');
+        const response = await fetch('/api/me', {
+            credentials: 'include' // Important: include credentials in the request
+        });
         if (response.ok) {
             const user = await response.json();
+            console.log('Auth check - User:', user); // Debug log
             if (mainInterface && loginPage) {
                 showMainInterface(user);
             } else {
                 showLoginPage();
             }
         } else {
+            console.log('Auth check - Not authenticated'); // Debug log
             showLoginPage();
         }
     } catch (error) {
@@ -54,12 +58,14 @@ if (loginForm) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include', // Important: include credentials in the request
                 body: JSON.stringify({ username, password })
             });
 
             const data = await response.json();
 
             if (response.ok) {
+                console.log('Login successful:', data); // Debug log
                 // Redirect based on role
                 switch (data.role) {
                     case 'admin':
@@ -72,9 +78,14 @@ if (loginForm) {
                         window.location.href = '/dietician.html';
                         break;
                     default:
-                        window.location.href = '/';
+                        console.error('Unknown role:', data.role);
+                        if (errorDiv) {
+                            errorDiv.textContent = 'Rôle utilisateur inconnu';
+                            errorDiv.style.display = 'block';
+                        }
                 }
             } else {
+                console.error('Login failed:', data);
                 if (errorDiv) {
                     errorDiv.textContent = data.error || 'Erreur de connexion';
                     errorDiv.style.display = 'block';

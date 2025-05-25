@@ -13,36 +13,50 @@ const closeModal = document.querySelector('.close');
 // Check authentication status on page load
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('/api/me');
+        const response = await fetch('/api/me', {
+            credentials: 'include' // Important: include credentials in the request
+        });
         if (response.ok) {
             const user = await response.json();
+            console.log('Current user:', user); // Debug log
             if (user.role === 'dieteticien') {
                 showMainInterface(user);
             } else {
-                window.location.href = '/';
+                console.warn('Rôle utilisateur non autorisé:', user.role);
+                window.location.href = '/login.html';
             }
         } else {
-            window.location.href = '/';
+            console.warn('Non authentifié, redirection vers login');
+            window.location.href = '/login.html';
         }
     } catch (error) {
         console.error('Error checking auth status:', error);
-        window.location.href = '/';
+        window.location.href = '/login.html';
     }
 });
 
 // Logout
-logoutBtn.addEventListener('click', async () => {
-    try {
-        await fetch('/api/logout', { method: 'POST' });
-        window.location.href = '/';
-    } catch (error) {
-        console.error('Error during logout:', error);
-    }
-});
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', async () => {
+        try {
+            await fetch('/api/logout', { 
+                method: 'POST',
+                credentials: 'include' // Important: include credentials in the request
+            });
+            window.location.href = '/login.html';
+        } catch (error) {
+            console.error('Error during logout:', error);
+        }
+    });
+}
 
 function showMainInterface(user) {
-    userRole.textContent = `Connecté en tant que ${user.role}`;
-    initializeCalendar();
+    if (userRole) {
+        userRole.textContent = `Connecté en tant que ${user.role}`;
+    }
+    if (calendar) {
+        initializeCalendar();
+    }
     loadTodayAppointments();
     loadStatistics();
 }

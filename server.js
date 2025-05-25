@@ -20,11 +20,13 @@ app.use(session({
         dir: './'
     }),
     secret: 'votre_secret_tres_securise',
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     cookie: {
         secure: false, // Mettre à true en production avec HTTPS
-        maxAge: 24 * 60 * 60 * 1000 // 24 heures
+        maxAge: 24 * 60 * 60 * 1000, // 24 heures
+        httpOnly: true,
+        sameSite: 'lax'
     }
 }));
 
@@ -65,13 +67,20 @@ function initializeDatabase() {
                             console.error('Erreur lors du hachage du mot de passe:', err);
                             return;
                         }
-                        db.run('INSERT OR IGNORE INTO users (username, password, role) VALUES (?, ?, ?)',
-                            [user.username, hash, user.role],
-                            (err) => {
-                                if (err) {
-                                    console.error('Erreur lors de l\'insertion de l\'utilisateur:', err);
-                                }
-                            });
+                        // First try to delete existing user
+                        db.run('DELETE FROM users WHERE username = ?', [user.username], (err) => {
+                            if (err) {
+                                console.error('Erreur lors de la suppression de l\'utilisateur:', err);
+                            }
+                            // Then insert the new user
+                            db.run('INSERT INTO users (username, password, role) VALUES (?, ?, ?)',
+                                [user.username, hash, user.role],
+                                (err) => {
+                                    if (err) {
+                                        console.error('Erreur lors de l\'insertion de l\'utilisateur:', err);
+                                    }
+                                });
+                        });
                     });
                 });
             }

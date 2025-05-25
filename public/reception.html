@@ -3,34 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réception Dashboard - Cabinet de Diététique</title>
+    <title>Espace Réceptionniste</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.5/dist/fullcalendar.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.5/dist/fullcalendar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.5/dist/locale/fr.js"></script>
 </head>
 <body>
-    <div class="main-interface">
-        <nav class="top-nav">
-            <div class="nav-brand">
-                <i class="fas fa-concierge-bell"></i>
-                <span>Réception - Cabinet de Diététique</span>
-            </div>
-            <div class="nav-user">
+    <div class="container">
+        <header>
+            <h1>Espace Réceptionniste</h1>
+            <div class="user-info">
                 <span id="user-role"></span>
-                <button id="logout-btn" class="logout-btn">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Déconnexion
+                <button id="logout-btn" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
                 </button>
             </div>
-        </nav>
-        <div class="container">
-            <section class="section">
-                <h2><i class="fas fa-calendar-check"></i> Tableau de bord Réception</h2>
-                <p>Bienvenue, vous pouvez gérer les patients et les rendez-vous.</p>
-                <div id="reception-content"></div>
+        </header>
+
+        <main>
+            <!-- Section Gestion Patients -->
+            <section id="patient-management" class="section">
+                <h2>Gestion des Patients</h2>
+                
+                <!-- Recherche de patient -->
+                <div class="search-box">
+                    <input type="text" id="patient-search" placeholder="Rechercher un patient...">
+                    <button onclick="searchPatient()" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Rechercher
+                    </button>
+                </div>
+                
+                <!-- Résultats de recherche -->
+                <div id="search-results" class="results-container"></div>
+                
+                <!-- Formulaire d'ajout de patient -->
+                <div class="form-container">
+                    <button id="show-add-patient" class="btn btn-success">
+                        <i class="fas fa-user-plus"></i> Ajouter un nouveau patient
+                    </button>
+                    
+                    <form id="patient-form" style="display: none;">
+                        <h3>Nouveau Patient</h3>
+                        <div class="form-group">
+                            <label for="first-name">Prénom</label>
+                            <input type="text" id="first-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Nom</label>
+                            <input type="text" id="last-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Adresse</label>
+                            <textarea id="address"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </form>
+                </div>
             </section>
+
+            <!-- Section Gestion Rendez-vous -->
+            <section id="appointment-management" class="section">
+                <h2>Gestion des Rendez-vous</h2>
+                
+                <!-- Recherche de diététicien -->
+                <div class="search-box">
+                    <select id="dietician-select">
+                        <option value="">Sélectionner un diététicien...</option>
+                    </select>
+                    <button onclick="searchDietician()" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Rechercher
+                    </button>
+                </div>
+
+                <!-- Calendrier et créneaux horaires -->
+                <div id="calendar-container" style="display: none;">
+                    <div id="calendar"></div>
+                    <div id="time-slots" class="time-slots-container"></div>
+                </div>
+
+                <!-- Recherche de rendez-vous -->
+                <div class="search-box">
+                    <input type="date" id="appointment-date">
+                    <button onclick="searchAppointments()" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Rechercher les rendez-vous
+                    </button>
+                </div>
+                
+                <!-- Liste des rendez-vous -->
+                <div id="appointment-list" class="results-container"></div>
+
+                <!-- Rendez-vous du jour -->
+                <div class="today-appointments">
+                    <h3>Rendez-vous du jour</h3>
+                    <button onclick="loadTodayAppointments()" class="btn btn-info">
+                        <i class="fas fa-calendar-day"></i> Afficher les rendez-vous d'aujourd'hui
+                    </button>
+                    <div id="today-list" class="results-container"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal pour modifier un patient -->
+    <div id="patient-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="edit-patient-form">
+                <input type="hidden" id="edit-patient-id">
+                <div class="form-group">
+                    <label for="edit-first-name">Prénom</label>
+                    <input type="text" id="edit-first-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-last-name">Nom</label>
+                    <input type="text" id="edit-last-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-phone">Téléphone</label>
+                    <input type="tel" id="edit-phone">
+                </div>
+                <div class="form-group">
+                    <label for="edit-email">Email</label>
+                    <input type="email" id="edit-email">
+                </div>
+                <div class="form-group">
+                    <label for="edit-address">Adresse</label>
+                    <textarea id="edit-address"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Modifier</button>
+            </form>
         </div>
     </div>
+
     <script src="reception.js"></script>
 </body>
 </html> 
