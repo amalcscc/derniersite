@@ -29,6 +29,89 @@
                 <p>Bienvenue, vous pouvez gérer les utilisateurs, patients et consulter les statistiques.</p>
                 <div id="admin-content"></div>
             </section>
+
+            <!-- Gestion des Utilisateurs -->
+            <section class="section" id="user-management-section">
+                <h2><i class="fas fa-user-cog"></i> Gestion des utilisateurs</h2>
+                <div class="form-section">
+                    <h3><i class="fas fa-user-plus"></i> Ajouter un utilisateur</h3>
+                    <form id="add-user-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Nom d'utilisateur</label>
+                                <input type="text" id="new-username" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mot de passe</label>
+                                <input type="password" id="new-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Rôle</label>
+                                <select id="new-role" required>
+                                    <option value="admin">Admin</option>
+                                    <option value="dieteticien">Diététicien</option>
+                                    <option value="reception">Agent d'accueil</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Ajouter</button>
+                    </form>
+                </div>
+                <div class="search-section">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="user-search" placeholder="Rechercher un utilisateur...">
+                    </div>
+                    <button id="search-user-btn" class="search-btn">Rechercher</button>
+                </div>
+                <div id="user-stats" class="dashboard-section">
+                    <h3>Statistiques utilisateurs</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <h4>Total</h4>
+                            <p id="stat-total-users">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-user-shield"></i>
+                            <h4>Admins</h4>
+                            <p id="stat-admins">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-user-md"></i>
+                            <h4>Diététiciens</h4>
+                            <p id="stat-dieticians">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-concierge-bell"></i>
+                            <h4>Agents d'accueil</h4>
+                            <p id="stat-receptions">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-user-plus"></i>
+                            <h4>Nouveaux (7j)</h4>
+                            <p id="stat-new-users">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="user-list-section" class="results-section">
+                    <h3>Liste des utilisateurs</h3>
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom d'utilisateur</th>
+                                <th>Rôle</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-list">
+                            <!-- Utilisateurs dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </div>
     </div>
     <script src="admin.js"></script>
