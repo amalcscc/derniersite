@@ -17,7 +17,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch('/api/me');
         if (response.ok) {
             const user = await response.json();
-            showMainInterface(user);
+            if (mainInterface && loginPage) {
+                showMainInterface(user);
+            } else {
+                showLoginPage();
+            }
         } else {
             showLoginPage();
         }
@@ -28,79 +32,102 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // Login form submission
-loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const errorDiv = document.getElementById('login-error');
+if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const username = document.getElementById('username')?.value;
+        const password = document.getElementById('password')?.value;
+        const errorDiv = document.getElementById('login-error');
 
-    try {
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            // Redirect based on role
-            switch (data.role) {
-                case 'admin':
-                    window.location.href = '/admin.html';
-                    break;
-                case 'reception':
-                    window.location.href = '/reception.html';
-                    break;
-                case 'dieteticien':
-                    window.location.href = '/dietician.html';
-                    break;
-                default:
-                    window.location.href = '/';
+        if (!username || !password) {
+            if (errorDiv) {
+                errorDiv.textContent = 'Veuillez remplir tous les champs';
+                errorDiv.style.display = 'block';
             }
-        } else {
-            errorDiv.textContent = data.error || 'Erreur de connexion';
-            errorDiv.style.display = 'block';
+            return;
         }
-    } catch (error) {
-        console.error('Login error:', error);
-        errorDiv.textContent = 'Erreur de connexion au serveur';
-        errorDiv.style.display = 'block';
-    }
-});
+
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Redirect based on role
+                switch (data.role) {
+                    case 'admin':
+                        window.location.href = '/admin.html';
+                        break;
+                    case 'reception':
+                        window.location.href = '/reception.html';
+                        break;
+                    case 'dieteticien':
+                        window.location.href = '/dietician.html';
+                        break;
+                    default:
+                        window.location.href = '/';
+                }
+            } else {
+                if (errorDiv) {
+                    errorDiv.textContent = data.error || 'Erreur de connexion';
+                    errorDiv.style.display = 'block';
+                }
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            if (errorDiv) {
+                errorDiv.textContent = 'Erreur de connexion au serveur';
+                errorDiv.style.display = 'block';
+            }
+        }
+    });
+}
 
 // Logout
-logoutBtn.addEventListener('click', async () => {
-    try {
-        await fetch('/api/logout', { method: 'POST' });
-        showLoginPage();
-    } catch (error) {
-        console.error('Error during logout:', error);
-    }
-});
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', async () => {
+        try {
+            await fetch('/api/logout', { method: 'POST' });
+            showLoginPage();
+        } catch (error) {
+            console.error('Error during logout:', error);
+        }
+    });
+}
 
 function showMainInterface(user) {
-    loginPage.style.display = 'none';
-    mainInterface.style.display = 'block';
-    userRole.textContent = `Connecté en tant que ${user.role}`;
-    
-    // Initialize calendar and load today's appointments
-    initializeCalendar();
-    loadTodayAppointments();
+    if (loginPage) loginPage.style.display = 'none';
+    if (mainInterface) {
+        mainInterface.style.display = 'block';
+        if (userRole) userRole.textContent = `Connecté en tant que ${user.role}`;
+        
+        // Initialize calendar and load today's appointments
+        if (calendar) initializeCalendar();
+        loadTodayAppointments();
+    }
 }
 
 function showLoginPage() {
-    loginPage.style.display = 'flex';
-    mainInterface.style.display = 'none';
-    loginForm.reset();
-    document.getElementById('login-error').textContent = '';
+    if (loginPage) loginPage.style.display = 'flex';
+    if (mainInterface) mainInterface.style.display = 'none';
+    if (loginForm) {
+        loginForm.reset();
+        const errorDiv = document.getElementById('login-error');
+        if (errorDiv) errorDiv.textContent = '';
+    }
 }
 
 // Initialize Calendar
 function initializeCalendar() {
+    if (!calendar) return;
+    
     $(calendar).fullCalendar({
         header: {
             left: 'prev,next today',
@@ -377,12 +404,14 @@ async function validateAppointment(appointmentId) {
 }
 
 // Modal close button
-closeModal.onclick = function() {
-    patientModal.style.display = 'none';
+if (closeModal) {
+    closeModal.onclick = function() {
+        if (patientModal) patientModal.style.display = 'none';
+    }
 }
 
 window.onclick = function(event) {
-    if (event.target == patientModal) {
+    if (patientModal && event.target == patientModal) {
         patientModal.style.display = 'none';
     }
 }

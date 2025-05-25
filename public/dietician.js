@@ -289,14 +289,28 @@ async function loadStatistics() {
 }
 
 // Utility functions
-function getCurrentUserId() {
-    // This should be stored in a secure way, perhaps in a session variable
-    return 1; // Placeholder
+async function getCurrentUserId() {
+    try {
+        const response = await fetch('/api/me');
+        if (response.ok) {
+            const user = await response.json();
+            return user.id;
+        }
+        return null;
+    } catch (error) {
+        console.error('Error getting current user:', error);
+        return null;
+    }
+}
+
+let selectedPatientId = null;
+
+function setSelectedPatientId(id) {
+    selectedPatientId = id;
 }
 
 function getSelectedPatientId() {
-    // This should be stored when a patient is selected
-    return 1; // Placeholder
+    return selectedPatientId;
 }
 
 // Modal close button
