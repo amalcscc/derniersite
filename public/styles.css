@@ -1175,25 +1175,65 @@ header {
 
 /* Time Slots */
 .time-slots-container {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.time-slots-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 10px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
 }
 
 .time-slot {
-    padding: 10px;
-    text-align: center;
-    background-color: #3498db;
+    background: #4f8cff;
     color: white;
-    border-radius: 4px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 8px rgba(79,140,255,0.2);
 }
 
-.time-slot.unavailable {
-    background-color: #e74c3c;
+.time-slot:hover {
+    background: #357abd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79,140,255,0.3);
+}
+
+.time-slot.selected {
+    background: #2ecc71;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(46,204,113,0.3);
+}
+
+.time-slot:disabled {
+    background: #95a5a6;
     cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Step Actions */
+.step-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+    gap: 15px;
+}
+
+.step-actions button {
+    flex: none;
+    width: auto;
 }
 
 /* Modal */
@@ -1303,4 +1343,740 @@ header {
     .time-slots-container {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     }
+}
+
+/* Time Slots Styling */
+.time-slots-header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.time-slots-header h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.time-slots-header p {
+    color: #666;
+}
+
+.time-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.time-slot {
+    padding: 12px;
+    text-align: center;
+    background-color: #3498db;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    font-weight: 500;
+}
+
+.time-slot.available:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #2980b9;
+}
+
+.time-slot.unavailable {
+    background-color: #e74c3c;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.time-slot.selected {
+    background-color: #2ecc71;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(46,204,113,0.2);
+}
+
+.booked-label {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* Appointment Confirmation */
+.appointment-confirmation {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    margin-top: 30px;
+    border-left: 4px solid #2ecc71;
+}
+
+.appointment-confirmation h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.appointment-confirmation p {
+    margin-bottom: 10px;
+    color: #666;
+}
+
+.appointment-confirmation strong {
+    color: #2c3e50;
+}
+
+.confirmation-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.confirmation-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.confirmation-actions .btn-success {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.confirmation-actions .btn-success:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+}
+
+.confirmation-actions .btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.confirmation-actions .btn-danger:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Booking Steps */
+.booking-steps {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.booking-step {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 4px solid #4f8cff;
+}
+
+.booking-step h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.booking-step h3 i {
+    color: #4f8cff;
+}
+
+.step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.step-content .form-control {
+    padding: 12px;
+    border: 2px solid #e3eafc;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.step-content .form-control:focus {
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 3px rgba(79,140,255,0.1);
+    outline: none;
+}
+
+.step-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.step-actions button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.step-actions .btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.step-actions .btn-secondary:hover {
+    background-color: #7f8c8d;
+    transform: translateY(-2px);
+}
+
+/* Calendar in booking step */
+.booking-step #calendar {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Time slots in booking step */
+.booking-step .time-slots-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Time Slots List */
+.time-slots-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.time-slot {
+    padding: 15px;
+    background-color: #4f8cff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.time-slot:hover {
+    background-color: #357abd;
+    transform: translateX(5px);
+}
+
+.time-slot.selected {
+    background-color: #2ecc71;
+    transform: scale(1.02);
+}
+
+/* Validation Form */
+.validation-form {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8faff;
+    border-radius: 8px;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-content p {
+    margin: 0;
+    color: #2c3e50;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e3eafc;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.btn-validate {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-validate:hover {
+    background: #27ae60;
+    transform: translateY(-2px);
+}
+
+/* Booking Container */
+.booking-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Progress Bar */
+.booking-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.step-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #e3eafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    transition: all 0.3s ease;
+}
+
+.step-icon i {
+    font-size: 1.2rem;
+    color: #95a5a6;
+}
+
+.step-label {
+    font-size: 0.9rem;
+    color: #95a5a6;
+    font-weight: 500;
+}
+
+.progress-line {
+    flex: 1;
+    height: 3px;
+    background: #e3eafc;
+    margin: 0 10px;
+    position: relative;
+    top: -25px;
+}
+
+.progress-step.active .step-icon {
+    background: #4f8cff;
+    box-shadow: 0 0 0 4px rgba(79,140,255,0.2);
+}
+
+.progress-step.active .step-icon i,
+.progress-step.active .step-label {
+    color: white;
+}
+
+.progress-step.completed .step-icon {
+    background: #2ecc71;
+}
+
+.progress-step.completed .step-icon i {
+    color: white;
+}
+
+/* Booking Steps */
+.booking-step {
+    background: #fff;
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid #e3eafc;
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.booking-step.active {
+    display: block;
+    animation: slideIn 0.3s ease;
+}
+
+.step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.step-content h3 {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.step-description {
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Form Controls */
+.form-control {
+    padding: 12px 15px;
+    border: 2px solid #e3eafc;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    background: #f8faff;
+}
+
+.form-control:focus {
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 3px rgba(79,140,255,0.1);
+    outline: none;
+}
+
+/* Time Slots */
+.time-slots-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.time-slot {
+    background: #4f8cff;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.time-slot:hover {
+    background: #357abd;
+    transform: translateY(-2px);
+}
+
+.time-slot.selected {
+    background: #2ecc71;
+    transform: scale(1.05);
+}
+
+/* Appointment Summary */
+.appointment-summary {
+    background: #f8faff;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-bottom: 1px solid #e3eafc;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-item i {
+    color: #4f8cff;
+    font-size: 1.2rem;
+}
+
+.summary-item span {
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+/* Step Actions */
+.step-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* Buttons */
+.btn-next, .btn-back, .btn-validate {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-next {
+    background: #4f8cff;
+    color: white;
+    align-self: flex-end;
+}
+
+.btn-next:hover {
+    background: #357abd;
+    transform: translateX(5px);
+}
+
+.btn-back {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-back:hover {
+    background: #7f8c8d;
+    transform: translateX(-5px);
+}
+
+.btn-validate {
+    background: #2ecc71;
+    color: white;
+}
+
+.btn-validate:hover {
+    background: #27ae60;
+    transform: translateY(-2px);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Calendar Container */
+.calendar-container {
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.calendar-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e3eafc;
+}
+
+.selected-date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    background: #f8faff;
+    border-radius: 10px;
+    color: #2c3e50;
+}
+
+.selected-date i {
+    color: #4f8cff;
+    font-size: 1.2rem;
+}
+
+.selected-date span {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.calendar-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid #e3eafc;
+}
+
+.date-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #7f8c8d;
+    font-size: 0.95rem;
+}
+
+.date-info i {
+    color: #4f8cff;
+}
+
+#calendar {
+    width: 100%;
+    background: #fff;
+}
+
+/* FullCalendar Customization */
+.fc {
+    font-family: inherit !important;
+}
+
+.fc-toolbar {
+    margin-bottom: 25px !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.fc-toolbar-title {
+    font-size: 1.4rem !important;
+    color: #2c3e50 !important;
+    font-weight: 600 !important;
+}
+
+.fc-button {
+    background: #4f8cff !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 10px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 8px rgba(79,140,255,0.2) !important;
+}
+
+.fc-button:hover {
+    background: #357abd !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79,140,255,0.3) !important;
+}
+
+.fc-button-primary:not(:disabled).fc-button-active {
+    background: #357abd !important;
+}
+
+.fc-daygrid-day {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.fc-daygrid-day:hover {
+    background: #f8faff;
+}
+
+.fc-daygrid-day.fc-day-today {
+    background: #e3f2fd !important;
+}
+
+.fc-daygrid-day.fc-day-selected {
+    background: #4f8cff !important;
+    color: white !important;
+}
+
+.fc-daygrid-day.fc-day-selected .fc-daygrid-day-number {
+    color: white !important;
+}
+
+.fc-daygrid-day.fc-day-selected:hover {
+    background: #357abd !important;
+}
+
+.fc-daygrid-day.fc-day-disabled {
+    background: #f5f5f5 !important;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.fc-daygrid-day.fc-day-disabled:hover {
+    background: #f5f5f5 !important;
+}
+
+.fc-daygrid-day-number {
+    padding: 8px !important;
+    font-size: 1rem !important;
+    color: #2c3e50 !important;
+}
+
+.fc-daygrid-day.fc-day-selected .fc-daygrid-day-number {
+    font-weight: 600 !important;
+}
+
+/* Disabled Button State */
+.btn-next:disabled {
+    background: #95a5a6 !important;
+    cursor: not-allowed;
+    transform: none !important;
+    opacity: 0.7;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e3eafc;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    background: #f8faff;
+}
+
+.form-group input:focus {
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 3px rgba(79,140,255,0.1);
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: #95a5a6;
+}
+
+/* Step Actions */
+.step-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 15px;
+}
+
+.step-actions button {
+    flex: 1;
 } 
